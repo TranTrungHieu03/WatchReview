@@ -14,13 +14,14 @@ export const getOneWatch = async (id: string): Promise<IWatch> => {
     try {
         return await Watch.findById(id)
             .populate("brand")
-            .populate({
-                path: "comments",
-                populate: {
-                    path: "author",
-                    select: "membername name"
-                }
-            }).exec()
+            // .populate({
+            //     path: "comments",
+            //     populate: {
+            //         path: "author",
+            //         select: "membername name"
+            //     }
+            // })
+            .exec()
     } catch (e) {
         throw new Error("Failed to find a watch: " + e);
     }

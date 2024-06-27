@@ -32,8 +32,7 @@ export const putOneBrand = async (id: string, data: IBrand): Promise<IBrand> => 
 }
 export const deleteOneBrand = async (id: string): Promise<IBrand> => {
     try {
-        // @ts-ignore
-        return await Brand.findOneAndDelete(id).exec()
+        return await Brand.findByIdAndDelete(id).exec()
     } catch (e) {
         throw new Error("Failed to delete a brand: " + e);
     }

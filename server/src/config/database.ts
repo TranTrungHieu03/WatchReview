@@ -4,7 +4,7 @@ import logging from "./logging";
 
 const connectToDatabase = async (): Promise<void> => {
     await mongoose
-        .connect(config.mongo.MONGO_DB_URI)
+        .connect(config.mongo.MONGO_DB_URI as string)
         .then(() => {
             logging.info("SERVER", "Mongo Connected");
         })

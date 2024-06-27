@@ -1,5 +1,6 @@
 import mongoose, {Schema} from "mongoose";
 import {IMember} from "../interfaces/member.interface";
+import {hashPassword} from "../utils/jwt";
 const memberSchema = new Schema({
     membername: { type: String, require: true, unique: true },
     password: { type: String, require: true },
@@ -9,9 +10,8 @@ const memberSchema = new Schema({
 }, { timestamps: true, });
 
 memberSchema.pre('save', async function (next) {
-    // if (!this.isModified('password')) return next();
-    // const salt = await bcrypt.genSalt(10);
-    // this.password = await bcrypt.hash(this.password, salt);
+    if (!this.isModified('password')) return next();
+    this.password = await hashPassword(this.password)
     next();
 });
 const Member = mongoose.model<IMember>("Member", memberSchema);
