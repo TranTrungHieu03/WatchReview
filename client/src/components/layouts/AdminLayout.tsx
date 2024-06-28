@@ -1,15 +1,17 @@
-import Header from "../templates/Header.tsx"
 import Sidebar from "../templates/Sidebar.tsx"
 import { Outlet } from "react-router-dom"
 import Footer from "../templates/Footer.tsx"
 
 const AdminLayout = () => {
     return (
-        <div>
-            <Header />
+        <div className={"flex"}>
             <Sidebar />
-            <Outlet />
-            <Footer />
+            <div className={"flex flex-col w-full"}>
+                <main>
+                    <Outlet />
+                </main>
+                <Footer />
+            </div>
         </div>
     )
 }

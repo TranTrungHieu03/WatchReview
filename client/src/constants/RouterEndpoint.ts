@@ -15,5 +15,8 @@ export enum RouterEndpoint {
     DeleteWatch = "delete-watch",
     GetBrand = "brands/:brandId",
     GetWatch = "watches/:watchId",
-    GetAccount = "accounts/:accountId"
+    GetAccount = "accounts/:accountId",
+    WatchDashboard = "watch-dashboard",
+    BrandDashboard = "brand-dashboard",
+    MemberDashboard = "member-dashboard"
 }

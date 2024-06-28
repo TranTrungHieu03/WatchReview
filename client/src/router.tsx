@@ -7,6 +7,8 @@ import BrandDashboard from "./pages/Dashboard/BrandDashboard.tsx"
 import Login from "./pages/Login/Login.tsx"
 import Signup from "./pages/Signup/Signup.tsx"
 import ErrorPage from "./pages/Error/ErrorPage.tsx"
+import WatchDashboard from "./pages/Dashboard/WatchDashboard.tsx"
+import MemberDashboard from "./pages/Dashboard/MemberDashboard.tsx"
 
 const router = createBrowserRouter([
     {
@@ -20,12 +22,20 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: RouterEndpoint.Admin,
+        path: "/",
         element: <AdminLayout />,
         children: [
             {
-                path: RouterEndpoint.Brand,
+                path: RouterEndpoint.BrandDashboard,
                 element: <BrandDashboard />
+            },
+            {
+                path: RouterEndpoint.WatchDashboard,
+                element: <WatchDashboard />
+            },
+            {
+                path: RouterEndpoint.MemberDashboard,
+                element: <MemberDashboard />
             }
         ]
     },

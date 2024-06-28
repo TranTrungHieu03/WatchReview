@@ -13,8 +13,12 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className={"flex gap-4 mr-6"}>
-                    <div className={"rounded-md  font-light bg-backgroundTheme px-3 py-3 "}>Login</div>
-                    <div className={"rounded-md  font-light bg-backgroundTheme px-3 py-3 "}>Sign up</div>
+                    <Link to={"/login"}>
+                        <div className={"rounded-md  font-light bg-backgroundTheme px-3 py-3 "}>Login</div>
+                    </Link>
+                    <Link to={"/sign-up"}>
+                        <div className={"rounded-md  font-light bg-backgroundTheme px-3 py-3 "}>Sign up</div>
+                    </Link>
                 </div>
             </div>
         </header>

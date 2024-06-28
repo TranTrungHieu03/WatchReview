@@ -8,7 +8,9 @@ const MainLayout = () => {
         <div className={""}>
             <Header />
             <Banner />
-            <Outlet />
+            <main>
+                <Outlet />
+            </main>
             <Footer />
         </div>
     )
