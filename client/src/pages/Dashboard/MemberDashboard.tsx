@@ -1,9 +1,9 @@
-import TableWatch from "../../components/pages/dashboard/TableWatch.tsx"
+import TableMember from "../../components/pages/dashboard/TableMember.tsx"
 
 const MemberDashboard = () => {
     return (
         <div className={"container mt-10"}>
-            <TableWatch />
+            <TableMember />
         </div>
     )
 }

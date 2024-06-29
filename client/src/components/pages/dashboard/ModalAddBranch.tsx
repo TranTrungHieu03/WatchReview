@@ -9,20 +9,19 @@ import {
 } from "../../ui/dialog.tsx"
 import { Label } from "../../ui/label.tsx"
 import { Button } from "../../ui/button.tsx"
-import { IBrand } from "../../../libs/interfaces/brand.interface.ts"
 import { Input } from "../../ui/input.tsx"
 import { useMutation, useQueryClient, UseQueryResult } from "@tanstack/react-query"
-import { IBrandService, updateBrand } from "../../../libs/services/brand.service.ts"
+import { addBrand, IBrandService } from "../../../libs/services/brand.service.ts"
 import { useState } from "react"
 
-const ModalEditBrand = ({ brand, query }: { brand: IBrand; query: UseQueryResult<IBrandService, Error> }) => {
+const ModalEditBrand = ({ query }: { query: UseQueryResult<IBrandService, Error> }) => {
     const queryClient = useQueryClient()
     const [open, setOpen] = useState<boolean>(false)
-    const [brandName, setBrandName] = useState<string>(brand.brandName)
+    const [brandName, setBrandName] = useState<string>("")
     const updateFn = useMutation({
-        mutationFn: () => updateBrand(brand._id, { brandName }),
+        mutationFn: () => addBrand({ brandName }),
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["brand-list", `brand-${brand._id}`] })
+            queryClient.invalidateQueries({ queryKey: ["brand-list"] })
         },
         onSettled: () => {
             query.refetch()
@@ -31,11 +30,11 @@ const ModalEditBrand = ({ brand, query }: { brand: IBrand; query: UseQueryResult
     return (
         <Dialog onOpenChange={setOpen} open={open}>
             <DialogTrigger asChild>
-                <div className={"rounded py-1 bg-amber-200 hover:bg-amber-300"}>Edit</div>
+                <Button className={"my-3 justify-end"}>Add new</Button>
             </DialogTrigger>
             <DialogContent className='sm:max-w-[425px]'>
                 <DialogHeader>
-                    <DialogTitle>Edit brand</DialogTitle>
+                    <DialogTitle>Add brand</DialogTitle>
                     <DialogDescription>Make changes to brand here. Click save when you're done.</DialogDescription>
                 </DialogHeader>
                 <div className='grid gap-4 py-4'>
@@ -45,8 +44,8 @@ const ModalEditBrand = ({ brand, query }: { brand: IBrand; query: UseQueryResult
                         </Label>
                         <Input
                             id='brandName'
-                            defaultValue={brand.brandName}
                             className='col-span-3'
+                            placeholder={"Enter brand name"}
                             autoFocus={true}
                             onChange={(e) => setBrandName(e.target.value)}
                         />

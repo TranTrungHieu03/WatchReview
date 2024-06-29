@@ -1,6 +1,14 @@
-import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from "../../ui/table.tsx"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table.tsx"
+import { useQuery } from "@tanstack/react-query"
+import { getAllMembers } from "../../../libs/services/member.service.ts"
 
 const TableMember = () => {
+    const query = useQuery({
+        queryKey: ["member-list"],
+        queryFn: getAllMembers
+    })
+    const members = query.data?.members
+    console.log(members)
     return (
         <Table>
             <TableCaption>A list of members</TableCaption>
@@ -14,14 +22,15 @@ const TableMember = () => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {/*{.map((invoice) => (*/}
-                {/*    <TableRow key={invoice.invoice}>*/}
-                {/*        <TableCell className="font-medium">{invoice.invoice}</TableCell>*/}
-                {/*        <TableCell>{invoice.paymentStatus}</TableCell>*/}
-                {/*        <TableCell>{invoice.paymentMethod}</TableCell>*/}
-                {/*        <TableCell className="text-right">{invoice.totalAmount}</TableCell>*/}
-                {/*    </TableRow>*/}
-                {/*))}*/}
+                {members?.map((member, index) => (
+                    <TableRow key={index}>
+                        <TableCell className='font-medium'>{index + 1}</TableCell>
+                        <TableCell>{member.membername}</TableCell>
+                        <TableCell>{member.name}</TableCell>
+                        <TableCell>{member.YOB}</TableCell>
+                        <TableCell>{member.isAdmin ? "Admin" : "Member"}</TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
     )

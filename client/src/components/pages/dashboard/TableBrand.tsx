@@ -1,15 +1,10 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../../ui/table.tsx"
-import { useQuery } from "@tanstack/react-query"
-import { getAllBrands } from "../../../libs/services/brand.service.ts"
+import { UseQueryResult } from "@tanstack/react-query"
+import { IBrandService } from "../../../libs/services/brand.service.ts"
 import BrandAction from "./BrandAction.tsx"
 
-const TableBrand = () => {
-    const query = useQuery({
-        queryKey: ["brand-list"],
-        queryFn: getAllBrands
-    })
+const TableBrand = ({ query }: { query: UseQueryResult<IBrandService, Error> }) => {
     const brands = query.data?.brands
-    console.log(brands)
     return (
         <Table>
             <TableCaption>A list of brands</TableCaption>
@@ -26,7 +21,7 @@ const TableBrand = () => {
                         <TableCell className='font-medium'>{index + 1}</TableCell>
                         <TableCell>{brand.brandName}</TableCell>
                         <TableCell>
-                            <BrandAction brand={brand} />
+                            <BrandAction brand={brand} query={query} />
                         </TableCell>
                     </TableRow>
                 ))}

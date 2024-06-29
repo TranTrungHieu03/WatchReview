@@ -6,15 +6,16 @@ import { UserSignup, UserSignupType } from "../../../libs/schemas/auth.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Button } from "../../ui/button.tsx"
 import { signup } from "../../../libs/services/auth.service.ts"
+import { useNavigate } from "react-router-dom"
 
 const FormSignup = () => {
+    const nav = useNavigate()
     const form = useForm<UserSignupType>({
         resolver: zodResolver(UserSignup)
     })
     const onSubmit = async (data: UserSignupType) => {
-        console.log(data)
-        const rs = await signup(data)
-        console.log(rs)
+        await signup(data)
+        nav("/login")
     }
     return (
         <div className={"grid grid-cols-5 mx-20"}>

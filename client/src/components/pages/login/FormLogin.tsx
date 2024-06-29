@@ -5,15 +5,31 @@ import { login } from "../../../libs/services/auth.service.ts"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../ui/form.tsx"
 import { Input } from "../../ui/input.tsx"
 import { Button } from "../../ui/button.tsx"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../context/AuthContext.tsx"
+import { jwtDecode } from "jwt-decode"
+import { RouterEndpoint } from "../../../constants/RouterEndpoint.ts"
 
 const FormLogin = () => {
+    const nav = useNavigate()
+    const { setAuth } = useAuth()
     const form = useForm<UserLoginType>({
         resolver: zodResolver(UserLogin)
     })
     const onSubmit = async (data: UserLoginType) => {
-        console.log(data)
         const rs = await login(data)
-        console.log(rs)
+        localStorage.setItem("accessToken", rs.data?.token as string)
+        const decodedToken = jwtDecode<{
+            membername: string
+            isAdmin: boolean
+        }>(rs.data?.token as string)
+        setAuth({ user: decodedToken.membername, isAdmin: decodedToken.isAdmin })
+        console.log(decodedToken)
+        if (decodedToken.isAdmin) {
+            nav(RouterEndpoint.WatchDashboard)
+        } else {
+            nav(RouterEndpoint.Home)
+        }
     }
     return (
         <div className={"grid grid-cols-2 mx-20 "}>

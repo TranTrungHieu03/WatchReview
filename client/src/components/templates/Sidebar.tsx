@@ -3,9 +3,12 @@ import { cn } from "../../libs/utils/cn.ts"
 import navAdmin from "../../constants/Navigation.tsx"
 import { createContext, ReactNode, useContext, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext.tsx"
+import GenerateImage from "../../libs/utils/generateImage.ts"
 
 const SidebarContext = createContext<{ expanded: boolean; setActiveItem: (item: string) => void } | null>(null)
 const Sidebar = () => {
+    const { auth } = useAuth()
     const activePath = useLocation()
     const [activeItem, setActiveItem] = useState<string>(activePath.pathname)
     const [expanded, setExpanded] = useState<boolean>(true)
@@ -23,10 +26,10 @@ const Sidebar = () => {
                     </button>
                     <button onClick={() => setExpanded((curr) => !curr)} className={"flex justify-center items-center"}>
                         {expanded ? (
-                            <Minimize2Icon />
+                            <Minimize2Icon size={20} />
                         ) : (
                             <span className={"py-2 px-3"}>
-                                <Maximize2Icon />
+                                <Maximize2Icon size={20} />
                             </span>
                         )}
                     </button>
@@ -46,18 +49,14 @@ const Sidebar = () => {
                     </ul>
                 </SidebarContext.Provider>
                 <div className={"flex justify-start items-center py-4 px-4"}>
-                    <img
-                        src='https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true'
-                        alt='avatar'
-                        className={"w-10 h-10 rounded-md "}
-                    />
+                    <img src={GenerateImage(auth?.user ?? "DRAFT")} alt='avatar' className={"w-10 h-10 rounded-md "} />
                     <h4
                         className={cn(
                             "font-semibold leading-4 overflow-hidden  transition-all",
                             expanded ? "w-53 ml-3" : "w-0"
                         )}
                     >
-                        ADMIN
+                        {auth.user}
                     </h4>
                 </div>
             </div>

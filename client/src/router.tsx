@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom"
+import { createBrowserRouter, Navigate } from "react-router-dom"
 import MainLayout from "./components/layouts/MainLayout.tsx"
 import HomePage from "./pages/HomePage/HomePage.tsx"
 import { RouterEndpoint } from "./constants/RouterEndpoint.ts"
@@ -9,6 +9,7 @@ import Signup from "./pages/Signup/Signup.tsx"
 import ErrorPage from "./pages/Error/ErrorPage.tsx"
 import WatchDashboard from "./pages/Dashboard/WatchDashboard.tsx"
 import MemberDashboard from "./pages/Dashboard/MemberDashboard.tsx"
+import WatchDetailPage from "./pages/WatchDetail/WatchDetailPage.tsx"
 
 const router = createBrowserRouter([
     {
@@ -16,8 +17,16 @@ const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
             {
+                index: true,
+                element: <Navigate to={RouterEndpoint.Home} />
+            },
+            {
                 path: RouterEndpoint.Home,
                 element: <HomePage />
+            },
+            {
+                path: RouterEndpoint.GetWatch,
+                element: <WatchDetailPage />
             }
         ]
     },
