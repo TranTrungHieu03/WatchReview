@@ -10,7 +10,7 @@ export const getAllMember = async (): Promise<IMember[]> => {
 }
 export const getMemberById = async (id: string): Promise<IMember> => {
     try {
-        return await Member.findById(id).exec()
+        return await Member.findOne({_id: id}).exec()
     } catch (e) {
         throw new Error("Failed to find a member: " + e);
     }

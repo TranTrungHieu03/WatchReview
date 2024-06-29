@@ -5,19 +5,19 @@ import { IWatch } from "../../../libs/interfaces/watch.interface.ts"
 import React from "react"
 
 const ListWatch = ({
-    watches,
-    setWatches
+    watches
+    // setWatches
 }: {
     watches: IWatch[]
-    setWatches: React.Dispatch<React.SetStateAction<IWatch[]>>
+    // setWatches: React.Dispatch<React.SetStateAction<IWatch[]>>
 }) => {
-    const query = useQuery({
-        queryKey: ["watch-list"],
-        queryFn: getAllWatches
-    })
-    if (query.data?.watches) {
-        setWatches(query.data?.watches)
-    }
+    // const query = useQuery({
+    //     queryKey: ["watch-list"],
+    //     queryFn: getAllWatches
+    // })
+    // if (query.data?.watches) {
+    //     setWatches(query.data?.watches)
+    // }
 
     return (
         <div className={"grid grid-cols-3 gap-8 py-4 "}>

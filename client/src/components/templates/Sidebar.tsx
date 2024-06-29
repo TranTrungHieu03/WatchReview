@@ -8,7 +8,7 @@ import GenerateImage from "../../libs/utils/generateImage.ts"
 
 const SidebarContext = createContext<{ expanded: boolean; setActiveItem: (item: string) => void } | null>(null)
 const Sidebar = () => {
-    const { auth } = useAuth()
+    const { auth, setAuth } = useAuth()
     const activePath = useLocation()
     const [activeItem, setActiveItem] = useState<string>(activePath.pathname)
     const [expanded, setExpanded] = useState<boolean>(true)
@@ -48,6 +48,18 @@ const Sidebar = () => {
                         ))}
                     </ul>
                 </SidebarContext.Provider>
+                <div
+                    onClick={() => {
+                        localStorage.removeItem("accessToken")
+                        setAuth({ user: null, isAdmin: null })
+                    }}
+                    className={cn(
+                        "font-semibold leading-4 overflow-hidden  transition-all cursor-pointer",
+                        expanded ? "w-53 ml-3" : "w-0"
+                    )}
+                >
+                    Logout
+                </div>
                 <div className={"flex justify-start items-center py-4 px-4"}>
                     <img src={GenerateImage(auth?.user ?? "DRAFT")} alt='avatar' className={"w-10 h-10 rounded-md "} />
                     <h4

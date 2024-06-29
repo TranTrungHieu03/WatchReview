@@ -35,6 +35,6 @@ export const getWatch = async (id: string) => {
     return response.data
 }
 export const comment = async (id: string, data: IComment) => {
-    const response: AxiosResponse<IWatchService> = await post<IWatchService>(`/watches/${id}/comments/`, data)
+    const response: AxiosResponse<IWatchService> = await post<IWatchService>(`/watches/${id}/comments`, data)
     return response.data
 }

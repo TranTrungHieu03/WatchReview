@@ -9,20 +9,21 @@ export const protectedRoute =
         }
 
         if (!token) {
-            return res.status(401).json({error: 'Not authorized, no token'});
+            return res.status(401).json({message: 'Not authorized, no token'});
         }
         try {
             const result = await verifyToken(token)
             if (result.valid) {
-                const {membername, isAdmin} = result.decoded!;
-                req.body.auth = {membername, isAdmin}
+                const {membername, isAdmin, id} = result.decoded!;
+                req.body.auth = {membername, isAdmin, id}
+                console.log(req.body.auth)
                 next();
             } else if (result.expired) {
-                return res.status(401).json({error: 'Token expired'});
+                return res.status(401).json({message: 'Token expired'});
             } else {
-                return res.status(401).json({error: 'Invalid token'});
+                return res.status(401).json({message: 'Invalid token'});
             }
         } catch (error) {
-            res.status(401).json({error: 'Not authorized, token failed'});
+            res.status(401).json({message: 'Not authorized, token failed'});
         }
     }

@@ -8,16 +8,20 @@ export const hashPassword = async (password: string) => {
 };
 export const comparePassword = async (
     password: string,
-    memberPassword: string
+    memberPassword: string,
 ) => {
     return bcrypt.compare(password, memberPassword);
 };
-export const generateToken = async (payload: { membername: string, isAdmin: boolean }, option?: SignOptions & {
+export const generateToken = async (payload: {
+    membername: string,
+    isAdmin: boolean,
+    id: string
+}, option?: SignOptions & {
     secret?: string
 }): Promise<string> => {
     const {secret = Config.server.SECRET_KEY_ACCESS_TOKEN, ...opts} = option || {}
     return jwt.sign(payload, secret, {
-        expiresIn: "60m",
+        expiresIn: "2d",
         ...opts
     });
 }
@@ -25,12 +29,13 @@ export const generateToken = async (payload: { membername: string, isAdmin: bool
 export const verifyToken = async (token: string, secret?: string): Promise<{
     valid: boolean,
     expired: boolean,
-    decoded: jwt.JwtPayload & { membername: string, isAdmin: boolean } | null
+    decoded: jwt.JwtPayload & { membername: string, isAdmin: boolean, id: string } | null
 }> => {
     try {
         const decoded = jwt.verify(token, secret || Config.server.SECRET_KEY_ACCESS_TOKEN) as jwt.JwtPayload & {
             membername: string,
-            isAdmin: boolean
+            isAdmin: boolean,
+            id: string
         };
         return {valid: true, expired: false, decoded};
     } catch (error) {

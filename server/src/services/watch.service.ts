@@ -14,13 +14,14 @@ export const getOneWatch = async (id: string): Promise<IWatch> => {
     try {
         return await Watch.findById(id)
             .populate("brand")
-            // .populate({
-            //     path: "comments",
-            //     populate: {
-            //         path: "author",
-            //         select: "membername name"
-            //     }
-            // })
+            .populate({
+                path: "comments",
+                populate: {
+                    path: "author",
+                    select: "membername name"
+                },
+                options: {sort: {createdAt: -1}}
+            })
             .exec()
     } catch (e) {
         throw new Error("Failed to find a watch: " + e);
@@ -107,8 +108,10 @@ export const haveComment = async (memberId: string, watchId: string): Promise<bo
 
 export const getAllByBrands = async (brands: string[]): Promise<IWatch[]> => {
     try {
+        console.log(brands)
         return await Watch.find({brand: {$in: brands}})
     } catch (e) {
         throw new Error("Failed to comment a watch: " + e);
     }
 }
+

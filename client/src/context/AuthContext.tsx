@@ -4,14 +4,15 @@ interface AuthContextType {
     auth: {
         user: string | null
         isAdmin: boolean | null
+        id: string | null
     }
-    setAuth: (auth: { user: string | null; isAdmin: boolean | null }) => void
+    setAuth: (auth: { user: string | null; isAdmin: boolean | null; id: string | null }) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [auth, setAuth] = useState<AuthContextType["auth"]>({ user: null, isAdmin: null })
+    const [auth, setAuth] = useState<AuthContextType["auth"]>({ user: null, isAdmin: null, id: null })
 
     return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>
 }

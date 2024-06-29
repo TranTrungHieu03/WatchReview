@@ -10,4 +10,8 @@ router.route("/:watchId")
     .get(watchController.getWatch)
     .put(watchController.updateWatch)
     .delete(watchController.deleteWatch)
+router.route("/filter")
+    .post(watchController.filterWatches)
+router.route("/:watchId/comments")
+    .post(watchController.putComment)
 export default router;

@@ -7,4 +7,5 @@ const router = express.Router();
 
 router.get("/", protectedRoute, isHasAdminRight, memberController.getAllMembers)
 router.post("/update", protectedRoute, isOwner, memberController.updateProfile)
+router.get("/name/:membername", memberController.getProfileByMembername)
 export default router;

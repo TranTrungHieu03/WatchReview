@@ -7,50 +7,57 @@ export const authController = {
         try {
             const {name, membername, password, YOB} = req.body;
             if (!name || !membername || !password || !YOB) {
-                return res.status(400).send({error: 'Missing required fields'});
+                return res.status(400).send({message: 'Missing required fields'});
             }
             const accountExisting = await getMemberByMemberName(membername);
             if (accountExisting) {
-                return res.status(400).send({error: 'Account already exists'})
+                return res.status(400).send({message: 'Account already exists'})
             }
             const account = await postMember(req.body)
-            return res.status(201).json({success: "Sign up successfully"})
+            return res.status(201).json({message: "Sign up successfully"})
         } catch (e) {
-            return res.status(500).json({error: e.message});
+            return res.status(500).json({message: e.message});
         }
     },
     login: async (req: Request, res: Response, next: NextFunction) => {
         try {
             const {membername, password} = req.body;
             if (!membername || !password) {
-                return res.status(400).send({error: 'Missing required fields'});
+                return res.status(400).send({message: 'Missing required fields'});
             }
             const account = await getMemberByMemberName(membername);
             if (!account) {
-                return res.status(400).send({error: 'Membername is wrong'});
+                return res.status(400).send({message: 'Membername is wrong'});
             }
             const isValid = await comparePassword(password, account.password);
             if (!isValid) {
-                return res.status(400).send({error: 'Password is wrong'});
+                return res.status(400).send({message: 'Password is wrong'});
             }
             const token = await generateToken({
                 membername: account.membername,
-                isAdmin: account.isAdmin
+                isAdmin: account.isAdmin,
+                id: account._id
             });
-            res.cookie("accessToken", token, {httpOnly: true, secure: true, maxAge: 1000 * 60 * 60});
+            // res.cookie("accessToken", token, {
+            //     httpOnly: true,
+            //     // secure: false,
+            //     maxAge: 1000 * 60 * 60,
+            //     // sameSite: "strict"
+            // });
             return res.status(200).json({
-                success: "Sign in successfully",
+                message: "Sign in successfully",
+                token: token
             })
         } catch (e) {
-            return res.status(500).json({error: e.message});
+            return res.status(500).json({message: e.message});
         }
     },
     logout: async (req: Request, res: Response, next: NextFunction) => {
         try {
             res.clearCookie("accessToken");
-            return res.status(200).json({success: "Sign out successfully"})
+            return res.status(200).json({message: "Sign out successfully"})
         } catch (e) {
-            return res.status(500).json({error: e.message});
+            return res.status(500).json({message: e.message});
         }
     }
 }

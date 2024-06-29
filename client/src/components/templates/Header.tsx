@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext.tsx"
 import generateImage from "../../libs/utils/generateImage.ts"
+import { Button } from "../ui/button.tsx"
 
 const Header = () => {
-    const { auth } = useAuth()
+    const { auth, setAuth } = useAuth()
     return (
         <header className={"flex items-center h-20 w-full border-b-2 border-gray-200 justify-between "}>
             <div className={"ml-8 flex items-center"}>
@@ -23,9 +24,17 @@ const Header = () => {
                 </div>
                 {auth?.user ? (
                     <div className={"flex gap-4 mr-6"}>
-                        <Link to={"/logout"}>
-                            <div className={"rounded-md  font-light bg-backgroundTheme px-3 py-2 "}>Logout</div>
-                        </Link>
+                        {/*<Link to={""}>*/}
+                        <Button
+                            className={"rounded-md  font-light bg-backgroundTheme px-3 py-2 "}
+                            onClick={() => {
+                                localStorage.removeItem("accessToken")
+                                setAuth({ user: null, isAdmin: null })
+                            }}
+                        >
+                            Logout
+                        </Button>
+                        {/*</Link>*/}
                         <img src={generateImage(auth?.user ?? "")} alt='' className={"w-10 h-10 rounded-md "} />
                     </div>
                 ) : (

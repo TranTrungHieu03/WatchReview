@@ -6,6 +6,7 @@ import { useMutation, useQueryClient, UseQueryResult } from "@tanstack/react-que
 import { IWatch } from "../../../libs/interfaces/watch.interface.ts"
 import ModalEditWatch from "./ModalEditWatch.tsx"
 import { deleteWatch, IWatchService } from "../../../libs/services/watch.service.ts"
+import { Link } from "react-router-dom"
 
 interface ActionProps {
     watch: IWatch
@@ -44,7 +45,9 @@ const WatchAction: FC<ActionProps> = ({ watch, query }) => {
                     "w-32 cursor-pointer px-2 py-1 rounded-sm flex flex-col gap-1 text-center bg-indigo-50 *:rounded *:py-1"
                 }
             >
-                <div className={"bg-indigo-100 hover:bg-indigo-200"}>View</div>
+                <Link to={`/watches/${watch._id}`}>
+                    <div className={"bg-indigo-100 hover:bg-indigo-200"}>View</div>
+                </Link>
 
                 <ModalEditWatch watch={watch} query={query} closePopover={closePopover} />
 

@@ -1,8 +1,7 @@
-import {IMember} from "./member.interface";
 export interface IComment {
     rating: Number
     content: string
-    author: IMember
+    author: string
     createdAt?: Date
     updatedAt?: Date
 }

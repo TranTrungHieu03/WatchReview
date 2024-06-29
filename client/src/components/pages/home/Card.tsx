@@ -2,6 +2,7 @@ import { IWatch } from "../../../libs/interfaces/watch.interface.ts"
 import { Link } from "react-router-dom"
 
 const Card = ({ watch }: { watch: IWatch }) => {
+    console.log(watch)
     return (
         <div>
             <div className='justify-center items-center flex rounded'>
@@ -17,7 +18,7 @@ const Card = ({ watch }: { watch: IWatch }) => {
                         </div>
                         <div className='pb-4 pt-2 px-2 bg-gray-50'>
                             <div className='font-bold'>{watch.brand?.brandName}</div>
-                            <div className='text-sm'>{watch.watchName}</div>
+                            <div className='text-sm'>{watch?.watchName}</div>
                         </div>
                     </div>
                 </Link>

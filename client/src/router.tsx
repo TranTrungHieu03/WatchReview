@@ -10,6 +10,7 @@ import ErrorPage from "./pages/Error/ErrorPage.tsx"
 import WatchDashboard from "./pages/Dashboard/WatchDashboard.tsx"
 import MemberDashboard from "./pages/Dashboard/MemberDashboard.tsx"
 import WatchDetailPage from "./pages/WatchDetail/WatchDetailPage.tsx"
+import ViewWatch from "./components/pages/dashboard/ViewWatch.tsx"
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: RouterEndpoint.MemberDashboard,
                 element: <MemberDashboard />
+            },
+            {
+                path: RouterEndpoint.ViewWatch,
+                element: <ViewWatch />
             }
         ]
     },

@@ -1,11 +1,11 @@
-import WatchInfo from "../../components/pages/watch/WatchInfo.tsx"
 import { useParams } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
-import { getWatch } from "../../libs/services/watch.service.ts"
-import ErrorPage from "../Error/ErrorPage.tsx"
-import Comment from "../../components/pages/watch/Comment.tsx"
+import { getWatch } from "../../../libs/services/watch.service.ts"
+import ErrorPage from "../../../pages/Error/ErrorPage.tsx"
+import WatchInfo from "../watch/WatchInfo.tsx"
+import Comment from "../watch/Comment.tsx"
 
-const WatchDetailPage = () => {
+const ViewWatch = () => {
     const { watchId } = useParams()
     const query = useQuery({
         queryKey: [`watch-${watchId}`],
@@ -19,16 +19,16 @@ const WatchDetailPage = () => {
     if (query.isError || watch === undefined) {
         return <ErrorPage />
     }
-    console.log(watch)
+
     return (
         <div className={"mx-20"}>
             {query.isSuccess && (
                 <div className={"flex flex-col gap-4"}>
                     <WatchInfo watch={watch} />
-                    <Comment watch={watch} query={query} isComment />
+                    <Comment watch={watch} query={query} />
                 </div>
             )}
         </div>
     )
 }
-export default WatchDetailPage
+export default ViewWatch

@@ -19,5 +19,6 @@ export enum RouterEndpoint {
     WatchDashboard = "/watch-dashboard",
     BrandDashboard = "/brand-dashboard",
     MemberDashboard = "/member-dashboard",
-    Unauthorized = "/unauthorized"
+    Unauthorized = "/unauthorized",
+    ViewWatch = "/watches/:watchId"
 }
